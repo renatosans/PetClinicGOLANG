@@ -6,19 +6,25 @@ import (
 )
 
 type Pet struct {
-	ID      string  `json:"id"`
+	Id      int     `json:"id"`
 	Name    string  `json:"name"`
-	Species Species `json:"species"`
-	Diet    string  `json:"diet"`
+	Breed   string  `json:"breed"`
+	Age     int     `json:"age"`
+	Owner   *Owner   `json:"owner"`
 }
 
-{"id":1,"name":"Bethoven","breed":"Saint Bernard","age":7,"owner":null},
-{"id":2,"name":"Molly","breed":"Golden Retriever","age":4,"owner":null},
-{"id":3,"name":"Yoshi","breed":"Shiba Inu","age":2,"owner":null},
-{"id":4,"name":"Thor","breed":"Beagle","age":9,"owner":null}
+type Owner struct {
+	name string;
+}
 
+var pets []Pet
 
 func main() {
+	pets = append(pets, Pet {Id:1, Name: "Bethoven", Breed: "Saint Bernard", Age: 7, Owner: nil})
+	pets = append(pets, Pet {Id:2, Name: "Molly", Breed: "Golden Retriever", Age: 4, Owner: nil})
+	pets = append(pets, Pet {Id:3, Name: "Yoshi", Breed: "Shiba Inu", Age: 2, Owner: nil})
+	pets = append(pets, Pet {Id:4, Name: "Thor", Breed: "Beagle", Age: 9, Owner: nil})
+
 	r := gin.Default()
 	r.GET("/ping", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
