@@ -28,11 +28,12 @@ func main() {
 	pets = append(pets, Pet {Id:2, Name: "Molly", Breed: "Golden Retriever", Age: 4, Owner: nil})
 	pets = append(pets, Pet {Id:3, Name: "Yoshi", Breed: "Shiba Inu", Age: 2, Owner: nil})
 	pets = append(pets, Pet {Id:4, Name: "Thor", Breed: "Beagle", Age: 9, Owner: nil})
+	pets = append(pets, Pet {Id:4, Name: "Hulk", Breed: "Pit Bull", Age: 5, Owner: nil})
 
 	r := gin.Default()
 	r.GET("/ping", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
-			"message": "hell yeah",
+			"message": "Gin gonic API",
 		})
 	})
 
