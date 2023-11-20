@@ -19,6 +19,10 @@ type Owner struct {
 
 var pets []Pet
 
+func getPets(c *gin.Context) {
+	c.JSON(http.StatusOK, gin.H{"data": pets})
+}
+
 func main() {
 	pets = append(pets, Pet {Id:1, Name: "Bethoven", Breed: "Saint Bernard", Age: 7, Owner: nil})
 	pets = append(pets, Pet {Id:2, Name: "Molly", Breed: "Golden Retriever", Age: 4, Owner: nil})
@@ -33,9 +37,10 @@ func main() {
 	})
 
     rGroup := r.Group("/api");
-	rGroup.GET(getAnimals);
-	rGroup.POST(postAnimals);
-	rGroup.DELETE(deleteAnimal);
+	rGroup.GET("/pets", getPets);
+	// rGroup.POST("/pets", postPet);
+	// rGroup.PATCH("/pets/{pet_id}", patchPet);
+	// rGroup.DELETE("/pets/{pet_id}", deletePet);
 
 	r.Run() // listen and serve on 0.0.0.0:8080
 }
