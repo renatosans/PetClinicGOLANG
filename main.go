@@ -11,7 +11,7 @@ type Pet struct {
 	Name    string  `json:"name"`
 	Breed   string  `json:"breed"`
 	Age     int     `json:"age"`
-	Owner   *Owner   `json:"owner"`
+	Owner   *Owner  `json:"owner"`
 }
 
 type Owner struct {
@@ -58,6 +58,19 @@ func patchPet(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"message": "Pet " + strconv.Itoa(id) + " updated successfully", "pet": updatedPet})
 }
 
+func deletePet(c *gin.Context) {
+	// Get the ID from the URL parameters
+	idParam := c.Param("id")
+	id, err := strconv.Atoi(idParam)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID"})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "Pet " + strconv.Itoa(id) + " deleted successfully"})
+}
+
+
 func main() {
 	pets = append(pets, Pet {Id:1, Name: "Bethoven", Breed: "Saint Bernard", Age: 7, Owner: nil})
 	pets = append(pets, Pet {Id:2, Name: "Molly", Breed: "Golden Retriever", Age: 4, Owner: nil})
@@ -76,7 +89,7 @@ func main() {
 	rGroup.GET("/pets", getPets);
 	rGroup.POST("/pets", postPet);
 	rGroup.PATCH("/pets/:id", patchPet);
-	// rGroup.DELETE("/pets/{pet_id}", deletePet);
+	rGroup.DELETE("/pets/:id", deletePet);
 
 	r.Run() // listen and serve on 0.0.0.0:8080
 }
