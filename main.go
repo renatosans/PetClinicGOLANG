@@ -23,6 +23,21 @@ func getPets(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": pets})
 }
 
+func postPet(c *gin.Context) {
+	var newPet Pet
+
+	// Bind JSON body to the Pet struct
+	if err := c.ShouldBindJSON(&newPet); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	// TODO: Add logic to save the new pet in your database or perform any other necessary operations
+
+	// Assuming successful creation, return a success response
+	c.JSON(http.StatusCreated, gin.H{"message": "Pet created successfully", "pet": newPet})
+}
+
 func main() {
 	pets = append(pets, Pet {Id:1, Name: "Bethoven", Breed: "Saint Bernard", Age: 7, Owner: nil})
 	pets = append(pets, Pet {Id:2, Name: "Molly", Breed: "Golden Retriever", Age: 4, Owner: nil})
@@ -39,7 +54,7 @@ func main() {
 
     rGroup := r.Group("/api");
 	rGroup.GET("/pets", getPets);
-	// rGroup.POST("/pets", postPet);
+	rGroup.POST("/pets", postPet);
 	// rGroup.PATCH("/pets/{pet_id}", patchPet);
 	// rGroup.DELETE("/pets/{pet_id}", deletePet);
 
