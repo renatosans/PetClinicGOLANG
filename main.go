@@ -31,7 +31,7 @@ func main() {
 	pets = append(pets, Pet {Id:5, Name: "Hulk", Breed: "Pit Bull", Age: 5, Owner: nil})
 
 	r := gin.Default()
-	r.GET("/ping", func(c *gin.Context) {
+	r.GET("/", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
 			"message": "Gin gonic API",
 		})
