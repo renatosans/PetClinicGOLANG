@@ -91,5 +91,5 @@ func main() {
 	rGroup.PATCH("/pets/:id", patchPet);
 	rGroup.DELETE("/pets/:id", deletePet);
 
-	r.Run() // listen and serve on 0.0.0.0:8080
+	r.Run(":3000")  // listen and serve on 0.0.0.0:3000
 }
