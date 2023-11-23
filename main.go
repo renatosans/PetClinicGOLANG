@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"net/http"
 	"petClinicAPI/prisma/db"
@@ -82,7 +83,12 @@ func main() {
 		panic(err)
 	}
 
-	var pets = client.Pet.FindMany()
+	ctx := context.Background()
+
+	pets, err := client.Pet.FindMany().Exec(ctx)
+	if err != nil {
+		panic(err)
+	}
 	fmt.Printf("Query result: %v\n", pets)
 
 	r := gin.Default()
