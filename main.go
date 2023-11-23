@@ -25,7 +25,7 @@ type Owner struct {
 }
 
 func getPets(c *gin.Context) {
-	// pets = prisma.Pet.FindMany();
+	// pets, err := client.Pet.FindMany().Exec(ctx)
 	// c.JSON(http.StatusOK, gin.H{"data": pets})
 }
 
@@ -39,6 +39,7 @@ func postPet(c *gin.Context) {
 	}
 
 	// TODO: Add logic to save the new pet in your database or perform any other necessary operations
+	// insertedPet, err := client.Pet.CreateOne().Exec(ctx)
 
 	// Assuming successful creation, return a success response
 	c.JSON(http.StatusCreated, gin.H{"message": "Pet created successfully", "pet": newPet})
