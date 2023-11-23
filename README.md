@@ -3,6 +3,12 @@ Pet Clinic API written in GOLANG
 
 ![screenshot](assets/banner.png)
 
+## Stack:
+- GIN web framework
+- Prisma ORM for GO
+- Postgres
+
+
 ## Features:
 - Agendamento de consultas veterinárias
 - Histórico de vacinas e tratamento para os pets
