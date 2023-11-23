@@ -1,5 +1,5 @@
-CREATE DATABASE pet_clinic;
-\c pet_clinic
+CREATE DATABASE golang_clinic;
+\c golang_clinic
 
 
 CREATE TABLE public.appointment (
