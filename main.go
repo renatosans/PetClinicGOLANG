@@ -11,6 +11,8 @@ import (
 	"github.com/joho/godotenv"
 )
 
+var client *db.PrismaClient
+
 type Pet struct {
 	Id    int    `json:"id"`
 	Name  string `json:"name"`
