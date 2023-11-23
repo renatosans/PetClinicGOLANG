@@ -80,7 +80,8 @@ func main() {
 		panic(err)
 	}
 
-    fmt.Printf("client.Pet.FindMany(): %v\n", client.Pet.FindMany())
+	var pets = client.Pet.FindMany();
+    fmt.Printf("Query result: %v\n", pets)
 
 	r := gin.Default()
 	r.GET("/", func(c *gin.Context) {
