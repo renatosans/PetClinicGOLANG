@@ -47,19 +47,19 @@ func getPets(c *gin.Context) {
 }
 
 func postPet(c *gin.Context) {
-	var newPet Pet
+	var payload Pet
 
 	// Bind JSON body to the Pet struct
-	if err := c.ShouldBindJSON(&newPet); err != nil {
+	if err := c.ShouldBindJSON(&payload); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
 	client := GetPrisma(c)
 	insertedPet, err := client.Pet.CreateOne(
-		db.Pet.Name.Set(newPet.Name),
-		db.Pet.Breed.Set(newPet.Breed),
-		db.Pet.Age.Set(newPet.Age),
+		db.Pet.Name.Set(payload.Name),
+		db.Pet.Breed.Set(payload.Breed),
+		db.Pet.Age.Set(payload.Age),
 	).Exec(c)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -80,8 +80,17 @@ func patchPet(c *gin.Context) {
 	}
 
 	// Bind JSON body to the Pet struct for updates
-	var updatedPet Pet
-	if err := c.ShouldBindJSON(&updatedPet); err != nil {
+	var payload Pet
+	if err := c.ShouldBindJSON(&payload); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	client := GetPrisma(c)
+	updatedPet, err := client.Pet.UpsertOne(
+		db.Pet.Name.Set(payload.Name),
+	).Exec(c)
+	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -97,6 +106,9 @@ func deletePet(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID"})
 		return
 	}
+
+	// client := GetPrisma(c)
+	// client.Pet.Delete(id).Exec(c)
 
 	c.JSON(http.StatusOK, gin.H{"message": "Pet " + strconv.Itoa(id) + " deleted successfully"})
 }
