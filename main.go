@@ -1,15 +1,24 @@
 package main
 
 import (
-	"strconv"
-	"context"
 	"net/http"
 	"petClinicAPI/prisma/db"
+	"strconv"
+
 	"github.com/gin-gonic/gin"
 	// "github.com/joho/godotenv"
 )
 
-var client *db.PrismaClient
+func GetPrisma(c *gin.Context) *db.PrismaClient {
+	client := db.NewClient()
+	if err := client.Prisma.Connect(); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return nil
+	}
+
+	return client
+}
+
 var pets []db.InnerPet
 
 type Pet struct {
@@ -26,15 +35,9 @@ type Owner struct {
 }
 
 func getPets(c *gin.Context) {
-	client := db.NewClient()
-	if err := client.Prisma.Connect(); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
+	client := GetPrisma(c)
 
-	ctx := context.Background()
-
-	pets, err := client.Pet.FindMany().Exec(ctx)
+	pets, err := client.Pet.FindMany().Exec(c)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
@@ -52,11 +55,19 @@ func postPet(c *gin.Context) {
 		return
 	}
 
-	// TODO: Add logic to save the new pet in your database or perform any other necessary operations
-	// insertedPet, err := client.Pet.CreateOne().Exec(ctx)
+	client := GetPrisma(c)
+	insertedPet, err := client.Pet.CreateOne(
+		db.Pet.Name.Set(newPet.Name),
+		db.Pet.Breed.Set(newPet.Breed),
+		db.Pet.Age.Set(newPet.Age),
+	).Exec(c)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
 
 	// Assuming successful creation, return a success response
-	c.JSON(http.StatusCreated, gin.H{"message": "Pet created successfully", "pet": newPet})
+	c.JSON(http.StatusCreated, gin.H{"message": "Pet created successfully", "pet": insertedPet})
 }
 
 func patchPet(c *gin.Context) {
