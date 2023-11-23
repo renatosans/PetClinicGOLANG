@@ -5,23 +5,26 @@ import (
 	"net/http"
 	"petClinicAPI/prisma/db"
 	"strconv"
-	"github.com/joho/godotenv"
+
 	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
 )
 
 type Pet struct {
-	Id      int     `json:"id"`
-	Name    string  `json:"name"`
-	Breed   string  `json:"breed"`
-	Age     int     `json:"age"`
-	Owner   *Owner  `json:"owner"`
+	Id    int    `json:"id"`
+	Name  string `json:"name"`
+	Breed string `json:"breed"`
+	Age   int    `json:"age"`
+	Owner *Owner `json:"owner"`
 }
 
 type Owner struct {
-	name string;
+	name  string
+	email string
 }
 
 func getPets(c *gin.Context) {
+	// pets = prisma.Pet.FindMany();
 	// c.JSON(http.StatusOK, gin.H{"data": pets})
 }
 
@@ -71,7 +74,6 @@ func deletePet(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"message": "Pet " + strconv.Itoa(id) + " deleted successfully"})
 }
 
-
 func main() {
 	godotenv.Load(".env")
 
@@ -80,8 +82,8 @@ func main() {
 		panic(err)
 	}
 
-	var pets = client.Pet.FindMany();
-    fmt.Printf("Query result: %v\n", pets)
+	var pets = client.Pet.FindMany()
+	fmt.Printf("Query result: %v\n", pets)
 
 	r := gin.Default()
 	r.GET("/", func(c *gin.Context) {
@@ -90,11 +92,11 @@ func main() {
 		})
 	})
 
-    rGroup := r.Group("/api");
-	rGroup.GET("/pets", getPets);
-	rGroup.POST("/pets", postPet);
-	rGroup.PATCH("/pets/:id", patchPet);
-	rGroup.DELETE("/pets/:id", deletePet);
+	rGroup := r.Group("/api")
+	rGroup.GET("/pets", getPets)
+	rGroup.POST("/pets", postPet)
+	rGroup.PATCH("/pets/:id", patchPet)
+	rGroup.DELETE("/pets/:id", deletePet)
 
-	r.Run(":3000")  // listen and serve on 0.0.0.0:3000
+	r.Run(":3000") // listen and serve on 0.0.0.0:3000
 }
