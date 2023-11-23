@@ -1,8 +1,11 @@
 package main
 
 import (
-	"strconv"
+	"fmt"
 	"net/http"
+	"petClinicAPI/prisma/db"
+	"strconv"
+	"github.com/joho/godotenv"
 	"github.com/gin-gonic/gin"
 )
 
@@ -18,10 +21,8 @@ type Owner struct {
 	name string;
 }
 
-var pets []Pet
-
 func getPets(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{"data": pets})
+	// c.JSON(http.StatusOK, gin.H{"data": pets})
 }
 
 func postPet(c *gin.Context) {
@@ -72,11 +73,14 @@ func deletePet(c *gin.Context) {
 
 
 func main() {
-	pets = append(pets, Pet {Id:1, Name: "Bethoven", Breed: "Saint Bernard", Age: 7, Owner: nil})
-	pets = append(pets, Pet {Id:2, Name: "Molly", Breed: "Golden Retriever", Age: 4, Owner: nil})
-	pets = append(pets, Pet {Id:3, Name: "Yoshi", Breed: "Shiba Inu", Age: 2, Owner: nil})
-	pets = append(pets, Pet {Id:4, Name: "Luigi", Breed: "Beagle", Age: 9, Owner: nil})
-	pets = append(pets, Pet {Id:5, Name: "Hulk", Breed: "Pit Bull", Age: 5, Owner: nil})
+	godotenv.Load(".env")
+
+	client := db.NewClient()
+	if err := client.Prisma.Connect(); err != nil {
+		panic(err)
+	}
+
+    fmt.Printf("client.Pet.FindMany(): %v\n", client.Pet.FindMany())
 
 	r := gin.Default()
 	r.GET("/", func(c *gin.Context) {
