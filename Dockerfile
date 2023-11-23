@@ -3,6 +3,8 @@ FROM golang:1.21-alpine AS builder
 RUN apk add --no-cache git
 WORKDIR /go/src/app
 COPY . .
+# RUN apk update && apk add openssl
+# RUN go run github.com/steebchen/prisma-client-go generate
 RUN go get -d -v ./...
 RUN go build -o /go/bin/app -v ./main.go
 
