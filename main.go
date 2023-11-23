@@ -97,7 +97,7 @@ func patchPet(c *gin.Context) {
 		}
 	*/
 
-	c.JSON(http.StatusOK, gin.H{"message": "Pet " + strconv.Itoa(id) + " updated successfully", "pet": updatedPet})
+	c.JSON(http.StatusOK, gin.H{"message": "Pet " + strconv.Itoa(id) + " updated successfully"})
 }
 
 func deletePet(c *gin.Context) {
