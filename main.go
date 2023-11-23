@@ -86,14 +86,16 @@ func patchPet(c *gin.Context) {
 		return
 	}
 
-	client := GetPrisma(c)
-	updatedPet, err := client.Pet.UpsertOne(
-		db.Pet.Name.Set(payload.Name),
-	).Exec(c)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
+	/*
+		client := GetPrisma(c)
+		updatedPet, err := client.Pet.UpsertOne(
+			payload,
+		).Exec(c)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+	*/
 
 	c.JSON(http.StatusOK, gin.H{"message": "Pet " + strconv.Itoa(id) + " updated successfully", "pet": updatedPet})
 }
@@ -107,8 +109,10 @@ func deletePet(c *gin.Context) {
 		return
 	}
 
-	// client := GetPrisma(c)
-	// client.Pet.Delete(id).Exec(c)
+	/*
+		client := GetPrisma(c)
+		client.Pet.Delete(id).Exec(c)
+	*/
 
 	c.JSON(http.StatusOK, gin.H{"message": "Pet " + strconv.Itoa(id) + " deleted successfully"})
 }
