@@ -12,6 +12,7 @@ import (
 )
 
 var client *db.PrismaClient
+var pets []db.InnerPet
 
 type Pet struct {
 	Id    int    `json:"id"`
