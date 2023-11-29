@@ -15,6 +15,7 @@ CREATE TABLE public.pet (
     breed character varying(45),
     age integer,
     owner integer,
+	flag_removed bool NOT NULL,
     PRIMARY KEY (id)
 );
 
