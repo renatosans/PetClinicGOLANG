@@ -4,7 +4,7 @@ CREATE DATABASE golang_clinic;
 
 CREATE TABLE public.appointment (
     id SERIAL,
-    date date,
+    date date NOT NULL,
     veterinarian integer NOT NULL,
     petowner integer NOT NULL
 );
@@ -12,7 +12,7 @@ CREATE TABLE public.appointment (
 CREATE TABLE public.pet (
     id SERIAL,
     name character varying(120) NOT NULL,
-    breed character varying(45),
+    breed character varying(45) NOT NULL,
     age integer,
     owner integer,
 	flag_removed bool NOT NULL,
