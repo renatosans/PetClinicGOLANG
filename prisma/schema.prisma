@@ -56,7 +56,7 @@ model veterinarian {
 }
 
 model appointment {
-  id           Int    @id @default(autoincrement())
+  id           Int       @id @default(autoincrement())
   date         DateTime? @db.Date
   veterinarian Int
   petowner     Int

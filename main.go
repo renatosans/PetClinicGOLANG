@@ -22,11 +22,12 @@ func GetPrisma(c *gin.Context) *db.PrismaClient {
 var pets []db.InnerPet
 
 type Pet struct {
-	Id    int    `json:"id"`
-	Name  string `json:"name"`
-	Breed string `json:"breed"`
-	Age   int    `json:"age"`
-	Owner *Owner `json:"owner"`
+	Id          int     `json:"id"`
+	Name        string  `json:"name"`
+	Breed       string `json:"breed"`
+	Age         int    `json:"age"`
+	Owner       *Owner  `json:"owner"`
+	FlagRemoved bool    `json:"flag_removed"`
 }
 
 type Owner struct {
