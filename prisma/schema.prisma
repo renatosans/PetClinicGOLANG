@@ -10,7 +10,7 @@ datasource db {
 model pet {
   id           Int           @id @default(autoincrement())
   name         String        @db.VarChar(120)
-  breed        String?       @db.VarChar(45)
+  breed        String        @db.VarChar(45)
   age          Int?
   owner        Int?
   flag_removed Boolean
@@ -56,8 +56,8 @@ model veterinarian {
 }
 
 model appointment {
-  id           Int       @id @default(autoincrement())
-  date         DateTime? @db.Date
+  id           Int      @id @default(autoincrement())
+  date         DateTime @db.Date
   veterinarian Int
   petowner     Int
 }
