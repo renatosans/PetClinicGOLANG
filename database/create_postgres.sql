@@ -2,13 +2,6 @@ CREATE DATABASE golang_clinic;
 \c golang_clinic
 
 
-CREATE TABLE public.appointment (
-    id SERIAL,
-    date date NOT NULL,
-    veterinarian integer NOT NULL,
-    petowner integer NOT NULL
-);
-
 CREATE TABLE public.pet (
     id SERIAL,
     name character varying(120) NOT NULL,
@@ -61,6 +54,13 @@ CREATE TABLE public.veterinarian (
     name character varying(120) NOT NULL,
     "inscricaoCRMV" character varying(75) NOT NULL,
     PRIMARY KEY (id)
+);
+
+CREATE TABLE public.appointment (
+    id SERIAL,
+    date date NOT NULL,
+    veterinarian integer NOT NULL,
+    petowner integer NOT NULL
 );
 
 --
