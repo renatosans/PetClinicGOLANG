@@ -1,9 +1,9 @@
 package main
 
 import (
+	"strconv"
 	"net/http"
 	"petClinicAPI/prisma/db"
-	"strconv"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
