@@ -56,7 +56,7 @@ func postPet(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusCreated, gin.H{"message": "Pet created successfully", "pet": insertedPet})
+	c.JSON(http.StatusOK, gin.H{"message": "Pet created successfully", "pet": insertedPet})
 }
 
 func patchPet(c *gin.Context) {
@@ -89,7 +89,7 @@ func patchPet(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusCreated, gin.H{"message": "Pet patched", "pet": updatedPet})
+	c.JSON(http.StatusOK, gin.H{"message": "Pet patched", "pet": updatedPet})
 }
 
 func deletePet(c *gin.Context) {
@@ -111,7 +111,7 @@ func deletePet(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusCreated, gin.H{"message": "Pet deleted successfully", "pet id": deletedPet.ID})
+	c.JSON(http.StatusOK, gin.H{"message": "Pet deleted successfully", "pet id": deletedPet.ID})
 }
 
 func main() {
