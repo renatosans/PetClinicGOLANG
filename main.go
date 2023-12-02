@@ -99,12 +99,16 @@ func deletePet(c *gin.Context) {
 		return
 	}
 
-	/*
-		client := GetPrisma(c)
-		client.Pet.Delete(id).Exec(c)
-	*/
+	client := GetPrisma(c)
+	deletedPet, err := client.Pet.FindUnique(
+		db.Pet.ID.Equals(id),
+	).Delete().Exec(c)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
 
-	c.JSON(http.StatusOK, gin.H{"message": "Pet " + strconv.Itoa(id) + " deleted successfully"})
+	c.JSON(http.StatusCreated, gin.H{"message": "Pet deleted successfully", "pet id": deletedPet.ID})
 }
 
 func main() {
