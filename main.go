@@ -92,6 +92,8 @@ func patchPet(c *gin.Context) {
 }
 
 func deletePet(c *gin.Context) {
+	// TODO: utilizar o flag_removed ao invés de apagar o registro na tabela
+
 	idParam := c.Param("id")
 	id, err := strconv.Atoi(idParam)
 	if err != nil {
