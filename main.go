@@ -2,7 +2,8 @@ package main
 
 import (
 	"net/http"
-	"petClinicAPI/prisma/db"
+	"petclinic/src/utils"
+	"petclinic/prisma/db"
 	"strconv"
 
 	"github.com/gin-contrib/cors"
@@ -10,20 +11,11 @@ import (
 	// "github.com/joho/godotenv"
 )
 
-func GetPrisma(c *gin.Context) *db.PrismaClient {
-	client := db.NewClient()
-	if err := client.Prisma.Connect(); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return nil
-	}
-
-	return client
-}
 
 func getPets(c *gin.Context) {
 	// var pets []db.InnerPet
 
-	client := GetPrisma(c)
+	client := utils.GetPrisma(c)
 
 	pets, err := client.Pet.FindMany().Exec(c)
 	if err != nil {
@@ -43,7 +35,7 @@ func postPet(c *gin.Context) {
 		return
 	}
 
-	client := GetPrisma(c)
+	client := utils.GetPrisma(c)
 	insertedPet, err := client.Pet.CreateOne(
 		db.Pet.Name.Set(payload.Name),
 		db.Pet.Breed.Set(payload.Breed),
@@ -74,7 +66,7 @@ func patchPet(c *gin.Context) {
 		return
 	}
 
-	client := GetPrisma(c)
+	client := utils.GetPrisma(c)
 	updatedPet, err := client.Pet.FindUnique(
 		db.Pet.ID.Equals(id),
 	).Update(
@@ -102,7 +94,7 @@ func deletePet(c *gin.Context) {
 		return
 	}
 
-	client := GetPrisma(c)
+	client := utils.GetPrisma(c)
 	deletedPet, err := client.Pet.FindUnique(
 		db.Pet.ID.Equals(id),
 	).Delete().Exec(c)
