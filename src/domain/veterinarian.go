@@ -2,19 +2,20 @@ package domain
 
 import (
 	"errors"
+
 	"github.com/google/uuid"
 )
 
 type Veterinarian struct {
-	ID             uuid.UUID  // Anotations para o GIN FRAMEWORK
-	Name           string     `json:"name" binding:"required"`
-	InscricaoCRMV  string     `json:"inscricao_crmv" binding:"required"`
+	ID            uuid.UUID // Anotations para o GIN FRAMEWORK
+	Name          string    `json:"name" binding:"required"`
+	InscricaoCRMV string    `json:"inscricao_crmv" binding:"required"`
 }
 
-func NewInsurance(Name string, InscricaoCRMV string) (*Veterinarian, error) {
+func NewVeterinarian(Name string, InscricaoCRMV string) (*Veterinarian, error) {
 	obj := &Veterinarian{
-		ID: uuid.New(),
-		Name: Name,
+		ID:            uuid.New(),
+		Name:          Name,
 		InscricaoCRMV: InscricaoCRMV,
 	}
 
@@ -27,7 +28,7 @@ func NewInsurance(Name string, InscricaoCRMV string) (*Veterinarian, error) {
 
 func (obj *Veterinarian) Validate() error {
 	if obj.Name == "" || obj.InscricaoCRMV == "" {
-		return errors.New("Invalid data")
+		return errors.New("invalid data")
 	}
 	return nil
 }

@@ -2,15 +2,15 @@ package main
 
 import (
 	"net/http"
-	"petclinic/src/utils"
 	"petclinic/prisma/db"
+	"petclinic/src/handlers"
+	"petclinic/src/utils"
 	"strconv"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
-	// "github.com/joho/godotenv"
+	"github.com/joho/godotenv"
 )
-
 
 func getPets(c *gin.Context) {
 	// var pets []db.InnerPet
@@ -107,7 +107,7 @@ func deletePet(c *gin.Context) {
 }
 
 func main() {
-	// godotenv.Load(".env")
+	godotenv.Load(".env")
 
 	router := gin.Default()
 	router.GET("/", func(c *gin.Context) {
@@ -121,6 +121,7 @@ func main() {
 	rGroup.POST("/pets", postPet)
 	rGroup.PATCH("/pets/:id", patchPet)
 	rGroup.DELETE("/pets/:id", deletePet)
+	rGroup.POST("/veterinarians", handlers.PostVeterinarian)
 
 	router.Use(cors.Default())
 	router.Run(":3000") // listen and serve on 0.0.0.0:3000

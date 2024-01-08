@@ -1,8 +1,11 @@
-package utils;
+package utils
 
 import (
+	"context"
 	"net/http"
 	"petclinic/prisma/db"
+	"petclinic/src/domain"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -17,24 +20,43 @@ func GetPrisma(c *gin.Context) *db.PrismaClient {
 	return client
 }
 
+// mock para testes
+type Pool struct {
+	minConns int32
+	maxConns int32
+}
+
+// mock para testes
+func (p *Pool) Exec(ctx context.Context, sql string, arguments ...any) (*domain.Veterinarian, error) {
+	return domain.NewVeterinarian("", "SP 9876543210")
+}
+
+// mock para testes
+func GetPool(databaseURL string) *Pool {
+	return &Pool{
+		minConns: 25,
+		maxConns: 25,
+	}
+}
+
 /*
 func GetPool(databaseURL string) *pgxpool.Pool {
-    config, err := pgxpool.ParseConfig(databaseURL)
-    if err != nil {
+	config, err := pgxpool.ParseConfig(databaseURL)
+	if err != nil {
 		panic(err)
-    }
-    pool, err := pgxpool.NewWithConfig(context.Background(), config)
-    if err != nil {
+	}
+	pool, err := pgxpool.NewWithConfig(context.Background(), config)
+	if err != nil {
 		panic(err)
-    }
+	}
 
-	return pool;
+	return pool
 }
 
 func AppMiddleware(pool *pgxpool.Pool) gin.HandlerFunc {
-    return func(c *gin.Context) {
-        c.Set("pool", pool)
-        c.Next()
-    }
+	return func(c *gin.Context) {
+		c.Set("pool", pool)
+		c.Next()
+	}
 }
 */
