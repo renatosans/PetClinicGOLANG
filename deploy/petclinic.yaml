@@ -83,8 +83,11 @@ spec:
         name: petclinic
     spec:
       containers:
-      - image: petclinic
+      - name: petclinic
+        image: petclinic
         imagePullPolicy: Never
-        name: petclinic
+        env:
+        - name: DATABASE_URL
+          value: postgres://postgres:postgres@db:5432/golang_clinic
         ports:
         - containerPort: 3000
