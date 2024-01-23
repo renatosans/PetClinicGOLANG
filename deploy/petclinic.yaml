@@ -1,0 +1,6 @@
+# consolidated manifest (built with kustomize)
+
+# kind: Deployment
+# apiVersion: v1
+# metadata:
+# ...
