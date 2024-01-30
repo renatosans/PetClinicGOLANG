@@ -31,8 +31,8 @@ func PostVeterinarian(c *gin.Context) {
 		return
 	}
 
-	vet, err := pool.Exec(c, "INSERT INTO veterinarian (id, name, \"inscricaoCRMV\") VALUES ($1, $2, $3)",
-		payload.ID,
+	vet, err := pool.Exec(c, "INSERT INTO veterinarian (name, \"inscricaoCRMV\") VALUES ($1, $2)",
+		// payload.ID,
 		payload.Name,
 		payload.InscricaoCRMV,
 	)
